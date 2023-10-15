@@ -1,0 +1,44 @@
+name: ec2 deployment cicd
+
+on:
+    push:
+        branches:
+            - main
+
+env:
+    applicationfolder: mt-ci-cd-application
+    AWS_REGION: ap-south-1
+    S3BUCKET: mahi2k 
+    
+jobs:
+    deploy:
+        name: Deploy Package
+        runs-on: ubuntu-latest
+        environment: dev
+        permissions:
+            id-token: write
+            contents: read
+
+        steps:
+        - name: Checkout Repository
+          uses: actions/checkout@v2
+
+        - name: Install Dependencies
+          run: |
+            sudo apt-get update -y
+            sudo apt-get install nginx -y
+        
+        - name: Build and Test
+          run: |
+            # testing script
+
+        - name: Final Deployment
+          run: |
+            uses: appleboy/ssh-action@v1.0.0
+            with:
+              host: ${{ secrets.HOST }}
+              username: ${{ secrets.USERNAME }}
+              key: ${{ secrets.KEY }}
+              port: ${{ secrets.PORT }}
+              script: |
+                whoami
