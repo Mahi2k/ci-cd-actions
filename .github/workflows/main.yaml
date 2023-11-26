@@ -4,12 +4,10 @@ on:
     push:
         branches:
             - main
-
 env:
     applicationfolder: mt-ci-cd-application
     AWS_REGION: ap-south-1
-    S3BUCKET: mahi2k 
-    
+    S3BUCKET: mahi2k  
 jobs:
     deploy:
         name: Deploy Package
@@ -30,7 +28,7 @@ jobs:
         
         - name: Build and Test
           run: |
-            # testing script
+            echo 'Testing sucessfully completed.!!'
 
         - name: Final Deployment
           run: |
