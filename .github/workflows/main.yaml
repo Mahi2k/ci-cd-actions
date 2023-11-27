@@ -1,15 +1,12 @@
 name: ec2 deployment cicd
-
 on:
     push:
         branches:
-            - main
-
+            - testing
 env:
     applicationfolder: mt-ci-cd-application
     AWS_REGION: ap-south-1
     S3BUCKET: mahi2k 
-    
 jobs:
     deploy:
         name: Deploy Package
@@ -18,7 +15,6 @@ jobs:
         permissions:
             id-token: write
             contents: read
-
         steps:
         - name: Checkout Repository
           uses: actions/checkout@v2
@@ -30,7 +26,7 @@ jobs:
         
         - name: Build and Test
           run: |
-            # testing script
+            # pytest
 
         - name: Final Deployment
           run: |
@@ -41,4 +37,5 @@ jobs:
               key: ${{ secrets.KEY }}
               port: ${{ secrets.PORT }}
               script: |
-                whoami
+                sudo cp index.html /var/www/html/
+                sudo systemctl retart nginx 
